@@ -12,7 +12,6 @@ RUN python scripts/generate_data.py --train 600 \
  && AERONEXUS_STATE_DB=:memory: python -m aeronexus.evals.runner
 RUN useradd -m app && mkdir -p /app/state && chown -R app /app
 USER app
-VOLUME ["/app/state"]
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=3s CMD python -c "import urllib.request;urllib.request.urlopen('http://localhost:8000/health')"
 CMD ["uvicorn", "aeronexus.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
